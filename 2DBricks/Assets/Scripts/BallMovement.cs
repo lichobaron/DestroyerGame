@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
+    public AudioSource dB;
     public float velX = 0;
     public float velY = 200;
     public Rigidbody2D rb;
@@ -13,6 +14,7 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dB = GetComponent<AudioSource>();
         line = GetComponent<LineRenderer>();
         line.SetPosition(1, new Vector3(0, 2));
     }
@@ -83,6 +85,7 @@ public class BallMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border")
         {
+            dB.Play();
             transform.position = new Vector2(0f, -9f);
             rb.velocity = new Vector2(0, 0);
             startGame = false;
