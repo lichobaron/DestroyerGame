@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class bricks : MonoBehaviour
 {
+	public AudioClip DestroyClip;
+	public AudioSource Source;
 
 	// Use this for initialization
 	void Start()
@@ -22,7 +24,10 @@ public class bricks : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "ball")
 		{
+			Source = GameObject.FindGameObjectWithTag("Fire").GetComponent<AudioSource>();
+			Source.clip = DestroyClip;
 			Destroy(gameObject);
+			Source.Play();
 		}
 
 	}
