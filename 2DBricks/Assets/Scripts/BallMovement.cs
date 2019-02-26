@@ -55,6 +55,7 @@ public class BallMovement : MonoBehaviour
         }        
         if (Input.GetKeyUp(KeyCode.Space) && startGame == false)
         {
+            dB.Play();
             if (zAngle > 270)
             {
                 zAngle -= 270;
@@ -85,7 +86,6 @@ public class BallMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border")
         {
-            dB.Play();
             transform.position = new Vector2(0f, -9f);
             rb.velocity = new Vector2(0, 0);
             startGame = false;
