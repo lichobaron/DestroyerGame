@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    public AudioSource dB;
     public float velX = 0;
     public float velY = 200;
     public Rigidbody2D rb;
@@ -14,7 +13,6 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dB = GetComponent<AudioSource>();
         line = GetComponent<LineRenderer>();
         line.SetPosition(1, new Vector3(0, 2));
     }
@@ -23,7 +21,6 @@ public class BallMovement : MonoBehaviour
     void Update()
     {
         float zAngle = transform.localEulerAngles.z;
-        Debug.Log(zAngle.ToString());
         if ((zAngle != 90) && (zAngle != 270))
         {
             if (Input.GetKey(KeyCode.RightArrow))
@@ -55,7 +52,7 @@ public class BallMovement : MonoBehaviour
         }        
         if (Input.GetKeyUp(KeyCode.Space) && startGame == false)
         {
-            dB.Play();
+            GetComponent<AudioSource>().Play();
             if (zAngle > 270)
             {
                 zAngle -= 270;
