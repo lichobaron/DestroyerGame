@@ -52,7 +52,8 @@ public class BallMovement : MonoBehaviour
         }        
         if (Input.GetKeyUp(KeyCode.Space) && startGame == false)
         {
-            GetComponent<AudioSource>().Play();
+            AudioSource sa = GameObject.FindWithTag("Center").GetComponent<AudioSource>();
+            sa.Play();
             if (zAngle > 270)
             {
                 zAngle -= 270;
