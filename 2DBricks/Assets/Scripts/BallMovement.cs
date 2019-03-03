@@ -14,67 +14,51 @@ public class BallMovement : MonoBehaviour
     void Start()
     {
         line = GetComponent<LineRenderer>();
-        line.SetPosition(1, new Vector3(0, 2));
+        line.SetPosition(1, new Vector3(2, 0));
+        line.transform.Rotate(0, 0, 90);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float zAngle = transform.localEulerAngles.z;
-        if ((zAngle != 90) && (zAngle != 270))
-        {
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                line.transform.Rotate(0, 0, -xRotation);
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                if (zAngle + xRotation == 360)
-                {
-                    line.transform.eulerAngles = new Vector3(0,0,0);
-                }
-                else
-                {
-                    line.transform.Rotate(0, 0, xRotation);
-                }
-            }
+        int zAngle = (int )transform.localEulerAngles.z;        
+        if (Input.GetKey(KeyCode.RightArrow))
+        {   
+            line.transform.Rotate(0, 0, -xRotation);
         }
-        else
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (zAngle == 270)
-            {
-                line.transform.eulerAngles = new Vector3(0, 0, 275);
-            }
-            if (zAngle == 90)
-            {
-                line.transform.eulerAngles = new Vector3(0, 0, 85);
-            }
-        }        
+            line.transform.Rotate(0, 0, xRotation);
+        }
         if (Input.GetKeyUp(KeyCode.Space) && startGame == false)
         {
             AudioSource sa = GameObject.FindWithTag("Center").GetComponent<AudioSource>();
             sa.Play();
-            if (zAngle > 270)
+            if ( zAngle > 180)
             {
-                zAngle -= 270;
+                velY = -300;
             }
-            else if (zAngle > 5)
+            switch (zAngle)
             {
-                zAngle += 90;
+                case 0:
+                    velX = 300;
+                    velY = 0;
+                    break;
+                case 90:
+                    velX = 0;
+                    break;
+                case 180:
+                    velY = 0;
+                    break;
+                case 270:
+                    velX = 0;
+                    break;
+                default:
+                    velX = velY / Mathf.Tan(zAngle * Mathf.Deg2Rad);
+                    break;
             }
-            else if (zAngle == 0 || zAngle == 360)
-            {
-                zAngle = 0;
-            }
-            if (Mathf.Tan(zAngle) == 0)
-            {
-                velX = 0;
-            }
-            else
-            {                
-                velX = velY / Mathf.Tan(zAngle * Mathf.Deg2Rad);
-            }             
             rb.AddForce(new Vector2(velX, velY));
+            velY = 400;
             startGame = true;
             line.enabled = false;
         }
@@ -84,7 +68,7 @@ public class BallMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Border")
         {
-            transform.position = new Vector2(0f, -9f);
+            transform.position = new Vector2(0f, 0f);
             rb.velocity = new Vector2(0, 0);
             startGame = false;
             line.enabled = true;
