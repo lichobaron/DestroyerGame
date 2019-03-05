@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
+	public AudioClip audioclip;
+	public AudioSource audiosource;
     public float velX = 0;
     public float velY = 200;
     public Rigidbody2D rb;
@@ -13,6 +15,7 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		audiosource = GetComponent<AudioSource>();
         line = GetComponent<LineRenderer>();
         line.SetPosition(1, new Vector3(2, 0));
         line.transform.Rotate(0, 0, 90);
@@ -32,8 +35,7 @@ public class BallMovement : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Space) && startGame == false)
         {
-            AudioSource sa = GameObject.FindWithTag("Center").GetComponent<AudioSource>();
-            sa.Play();
+			audiosource.Play();
             if ( zAngle > 180)
             {
                 velY = -300;
